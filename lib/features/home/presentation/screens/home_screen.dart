@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:netflixmobapp/widgets/now_playing_widget.dart';
-import 'package:netflixmobapp/widgets/popular_widget.dart';
-import 'package:netflixmobapp/widgets/toprated_widget.dart';
+import 'package:netflixmobapp/features/home/presentation/widgets/now_playing_widget.dart';
+import 'package:netflixmobapp/features/home/presentation/widgets/popular_widget.dart';
+import 'package:netflixmobapp/features/home/presentation/widgets/toprated_widget.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
+
 
   @override
   Widget build(BuildContext context) {
