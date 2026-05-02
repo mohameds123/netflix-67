@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:netflixmobapp/features/home/logic/cubit.dart';
 import 'package:netflixmobapp/features/home/presentation/widgets/now_playing_widget.dart';
 import 'package:netflixmobapp/features/home/presentation/widgets/popular_widget.dart';
 import 'package:netflixmobapp/features/home/presentation/widgets/toprated_widget.dart';
@@ -9,12 +11,15 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          spacing: 12,
-          children: [NowPlayingWidget(),PopularWidget(), TopRatedWidget()],
+    return BlocProvider(
+      create: (context)=> HomeCubit()..getNowPlaying(),
+      child: Scaffold(
+        body: SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            spacing: 12,
+            children: [NowPlayingWidget(),PopularWidget(), TopRatedWidget()],
+          ),
         ),
       ),
     );
