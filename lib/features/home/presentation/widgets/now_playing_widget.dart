@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:netflixmobapp/features/details/presentation/widgets/details_widget.dart';
 import 'package:netflixmobapp/features/home/logic/cubit.dart';
 import 'package:netflixmobapp/features/home/logic/state.dart';
+
+import '../../../details/presentation/details_screen.dart';
 
 class NowPlayingWidget extends StatelessWidget {
   const NowPlayingWidget({super.key});
@@ -37,6 +40,9 @@ class NowPlayingWidget extends StatelessWidget {
                     return Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
                       child: InkWell(
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>DetailsScreen(results: state.movieModel.results![index],)));
+                        },
                           child: Image.network("https://image.tmdb.org/t/p/w500${state.movieModel.results![index].posterPath!}")),
                     );
                   },
