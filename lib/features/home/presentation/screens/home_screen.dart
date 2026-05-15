@@ -12,7 +12,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context)=> HomeCubit()..getNowPlaying(),
+      create: (context)=> HomeCubit()..getNowPlaying()..getTopRated()..getPopular(),
       child: Scaffold(
         body: SafeArea(
           child: Column(

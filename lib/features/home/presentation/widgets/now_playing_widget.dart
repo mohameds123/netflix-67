@@ -31,7 +31,7 @@ class NowPlayingWidget extends StatelessWidget {
               return SizedBox(
                 height: 158,
                 child: ListView.builder(
-                  itemCount: 15,
+                  itemCount: state.movieModel.results!.length,
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) {
                     return Padding(

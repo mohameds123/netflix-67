@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:netflixmobapp/features/home/logic/cubit.dart';
+import 'package:netflixmobapp/features/home/logic/state.dart';
 
 class TopRatedWidget extends StatelessWidget {
   const TopRatedWidget({super.key});
@@ -16,23 +19,33 @@ class TopRatedWidget extends StatelessWidget {
             //fontWeight: FontWeight.w400,
             color: Colors.white,
             fontFamily: "Inter",
-
           ),
         ),
-        SizedBox(
-          height: 158,
-          child: ListView.builder(
-            itemCount: 15,
-            scrollDirection: Axis.horizontal,
-            itemBuilder: (context, index) {
-
-
-              return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: Image.asset("assets/images/test_movies.png"),
+        BlocBuilder<HomeCubit, HomeStates>(
+          builder: (context, state) {
+            if (state is HomeLoadingState) {
+              return Center(child: CircularProgressIndicator());
+            } else if (state is HomeSuccessState) {
+              return SizedBox(
+                height: 158,
+                child: ListView.builder(
+                  itemCount: state.movieModel.results!.length,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Image.network(
+                        "https://image.tmdb.org/t/p/w500${state.movieModel.results![index].posterPath!}",
+                      ),
+                    );
+                  },
+                ),
               );
-            },
-          ),
+            } else if (state is HomeErrorState) {
+              return Center(child: Text(state.errorMessage));
+            }
+            return SizedBox();
+          },
         ),
       ],
     );

@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:netflixmobapp/core/const/api_const.dart';
 import 'package:netflixmobapp/features/home/data/movie_model.dart';
 import 'package:netflixmobapp/features/home/logic/state.dart';
 
@@ -15,9 +16,35 @@ class HomeCubit extends Cubit<HomeStates> {
 
     try {
      final response = await dio.get(
-        "https://api.themoviedb.org/3/movie/now_playing?api_key=87903828b97a85b50c60fb3bbd960c55",
+        ApiConst.nowPlaying,
       );
      final result = MovieModel.fromJson(response.data);
+      emit(HomeSuccessState(movieModel: result));
+    } catch (e) {
+      emit(HomeErrorState(errorMessage: e.toString()));
+    }
+  }
+  Future getTopRated() async {
+    emit(HomeLoadingState());
+
+    try {
+      final response = await dio.get(
+        ApiConst.topRated,
+      );
+      final result = MovieModel.fromJson(response.data);
+      emit(HomeSuccessState(movieModel: result));
+    } catch (e) {
+      emit(HomeErrorState(errorMessage: e.toString()));
+    }
+  }
+  Future getPopular() async {
+    emit(HomeLoadingState());
+
+    try {
+      final response = await dio.get(
+        ApiConst.popular,
+      );
+      final result = MovieModel.fromJson(response.data);
       emit(HomeSuccessState(movieModel: result));
     } catch (e) {
       emit(HomeErrorState(errorMessage: e.toString()));
